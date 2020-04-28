@@ -81,7 +81,7 @@ variable "volume_mount" {
 #VARIABLES FOR SETTINGS.INI
 variable "PAGE_TITLE" {
   description = "(REQUIRED)Message which will be displayed on page header"
-  default = "Change your password on inventi.fy domain"
+  default = "Change your password on example.com domain"
 }
 variable "LDAP_HOST" {
   description = "(REQUIRED)IP adress or DNS name which will be connected to"
@@ -97,7 +97,7 @@ variable "USE_SSL" {
 }
 variable "LDAP_BASE" {
   description = "(REQUIRED) LDAP base example(dc=example,dc=com)"
-  default = "dc=inventi,dc=fy"
+  default = "dc=example,dc=com"
 }
 /*
 variable "LDAP_SEARCH_FILTER" {
@@ -112,7 +112,7 @@ variable "DC_TYPE" {
 }
 variable "AD_DOMAIN" {
   description = "(OPTIONAL) If need to use AD or Samba 4 - Directory domain"
-  default = "inventi.fy"
+  default = "example.com"
 }
 variable "AD_SEARCH_FILTER" {
   description = "(OPTIONAL) If need to use AD or Samba 4 - Ldap filrter that is used to find user"
