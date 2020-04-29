@@ -20,8 +20,7 @@ resource "kubernetes_config_map" "settings" {
 }
 
 module "deploy" {
-  source = "../terraform_k8s_deploy"
-  #source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git"
   name = var.app_name
   namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
   image = "magnaz/ldap-passwd-webui:${var.image_tag}"
@@ -34,16 +33,14 @@ module "deploy" {
 }
 
 module "service" {
-  source = "../terraform_k8s_service"
-  #source = "git::https://github.com/greg-solutions/terraform_k8s_service.git"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_service.git"
   app_name = var.app_name
   app_namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
   port_mapping = var.ports
 }
 
 module "ingress" {
-  source = "../terraform_k8s_ingress"
-  #source = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git"
   app_name = var.app_name
   app_namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
   domain_name = var.domain
