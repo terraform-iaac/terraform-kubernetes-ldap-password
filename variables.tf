@@ -44,7 +44,6 @@ variable "ingress_annotations" {
   description = "(Optional) Set addional annontations for ingress"
   default = {
     "kubernetes.io/ingress.class" = "nginx"
-    "nginx.ingress.kubernetes.io/whitelist-source-range" = ""
   }
 }
 variable "image_tag" {
