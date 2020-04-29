@@ -1,5 +1,5 @@
 variable "domain" {
-  description = "(Required) Domain for the url. Generating url: change-passwd.[domain]"
+  description = "(Required) Domain for the url. Generating url: ldap-passwd.[domain]"
 }
 variable "app_name" {
   description = "(Optional) Application name"
@@ -31,7 +31,7 @@ variable "web_internal_port" {
   description = "(Optional) Connect URL to Container internal port. !Note! If this value changed, need specify new ports in var.ports"
   default = [
     {
-      sub_domain = "change-passwd."
+      sub_domain = "ldap-passwd."
       internal_port = "8080"
     }
   ]
@@ -44,7 +44,7 @@ variable "ingress_annotations" {
   description = "(Optional) Set addional annontations for ingress"
   default = {
     "kubernetes.io/ingress.class" = "nginx"
-    "nginx.ingress.kubernetes.io/whitelist-source-range" = "10.0.0.0/8, 91.225.201.161/32"
+    "nginx.ingress.kubernetes.io/whitelist-source-range" = ""
   }
 }
 variable "image_tag" {
@@ -79,56 +79,50 @@ variable "volume_mount" {
   ]
 }
 #VARIABLES FOR SETTINGS.INI
-variable "PAGE_TITLE" {
+variable "page_title" {
   description = "(REQUIRED)Message which will be displayed on page header"
-  default = "Change your password on example.com domain"
-}
-variable "LDAP_HOST" {
-  description = "(REQUIRED)IP adress or DNS name which will be connected to"
-  default = "10.10.0.89"
-}
-variable "LDAP_PORT" {
-  description = "(REQUIRED) Port on ldap server, if USE_SSL=true need to use port 636"
-  default = "389"
-}
-variable "USE_SSL" {
-  description = "(REQUIRED) True or False if is used False then connection is going to be insecure"
-  default = "false"
-}
-variable "LDAP_BASE" {
-  description = "(REQUIRED) LDAP base example(dc=example,dc=com)"
-  default = "dc=example,dc=com"
-}
-/*
-variable "LDAP_SEARCH_FILTER" {
-  description = "(OPTIONAL) SHOULD SPECIFY AND UNCOMMENT IN ../SETTINGS.INI ONLY IF YOU INTEND TO USE NOT AD OR SAMBA 4 DC TYPE - Ldap filrter that is used to find user"
   default = ""
 }
-*/
+variable "ldap_host" {
+  description = "(REQUIRED)IP adress or DNS name which will be connected to"
+  default = ""
+}
+variable "ldap_port" {
+  description = "(REQUIRED) Port on ldap server, if USE_SSL=true need to use port 636"
+  default = ""
+}
+variable "use_ssl" {
+  description = "(REQUIRED) True or False if is used False then connection is going to be insecure"
+  default = ""
+}
+variable "ldap_base" {
+  description = "(REQUIRED) LDAP base example: dc=example,dc=com"
+  default = ""
+}
 # For AD / Samba 4
-variable "DC_TYPE" {
+variable "dc_type" {
   description = "(OPTIONAL) If need to use AD or Samba 4 - Domain controller type"
   default = "ad"
 }
-variable "AD_DOMAIN" {
-  description = "(OPTIONAL) If need to use AD or Samba 4 - Directory domain"
-  default = "example.com"
+variable "ad_domain" {
+  description = "(REQUIRED) If need to use AD or Samba 4 - Directory domain e.g. example.com"
+  default = ""
 }
-variable "AD_SEARCH_FILTER" {
+variable "ad_search_filter" {
   description = "(OPTIONAL) If need to use AD or Samba 4 - Ldap filrter that is used to find user"
   default = "sAMAccountName={uid}"
 }
 # ldappasswd server
-variable "SERVER" {
-  description = "(REQUIRED) - ldap-passwd application mode"
+variable "server" {
+  description = "(OPTIONAL) - ldap-passwd application mode"
   default = "auto"
 }
-variable "SERVER_HOST" {
-  description = "(REQUIRED) - ldap-passwd server host"
+variable "server_host" {
+  description = "(OPTIONAL) - ldap-passwd server host"
   default = "0.0.0.0"
 }
-variable "SERVER_PORT" {
-  description = "(REQUIRED) - ldap-passwd server port"
+variable "server_port" {
+  description = "(OPTIONAL) - ldap-passwd server port"
   default = "8080"
 }
 #END OF VARIABLES FOR SETTINGS.INI

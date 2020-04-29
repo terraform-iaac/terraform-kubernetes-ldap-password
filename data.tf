@@ -1,21 +1,20 @@
 data "template_file" "settings" {
-  template = "${file("${path.module}/settings.ini.tpl")}"
+  template = file("${path.module}/settings.ini.tpl")
   vars = {
     # html
-    PAGE_TITLE = var.PAGE_TITLE
+    PAGE_TITLE = var.page_title
     # ldap
-    LDAP_HOST = var.LDAP_HOST
-    LDAP_PORT = var.LDAP_PORT
-    USE_SSL = var.USE_SSL
-    LDAP_BASE = var.LDAP_BASE
-    #LDAP_SEARCH_FILTER = var.LDAP_SEARCH_FILTER
+    LDAP_HOST = var.ldap_host
+    LDAP_PORT = var.ldap_port
+    USE_SSL = var.use_ssl
+    LDAP_BASE = var.ldap_base
     # For AD / Samba 4
-    DC_TYPE = var.DC_TYPE
-    AD_DOMAIN = var.AD_DOMAIN
-    AD_SEARCH_FILTER = var.AD_SEARCH_FILTER
+    DC_TYPE = var.dc_type
+    AD_DOMAIN = var.ad_domain
+    AD_SEARCH_FILTER = var.ad_search_filter
     # ldappasswd server
-    SERVER = var.SERVER
-    SERVER_HOST = var.SERVER_HOST
-    SERVER_PORT = var.SERVER_PORT
+    SERVER = var.server
+    SERVER_HOST = var.server_host
+    SERVER_PORT = var.server_port
   }
 }

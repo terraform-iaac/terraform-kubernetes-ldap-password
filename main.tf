@@ -15,7 +15,7 @@ resource "kubernetes_config_map" "settings" {
     namespace = var.app_namespace
   }
   data = {
-    "settings.ini" = "${data.template_file.settings.rendered}"
+    "settings.ini" = data.template_file.settings.rendered
   }
 }
 
