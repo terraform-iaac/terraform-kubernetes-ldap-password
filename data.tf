@@ -8,7 +8,7 @@ data "template_file" "settings" {
     LDAP_PORT = var.LDAP_PORT
     USE_SSL = var.USE_SSL
     LDAP_BASE = var.LDAP_BASE
-    LDAP_SEARCH_FILTER = var.LDAP_SEARCH_FILTER
+    #LDAP_SEARCH_FILTER = var.LDAP_SEARCH_FILTER
     # For AD / Samba 4
     DC_TYPE = var.DC_TYPE
     AD_DOMAIN = var.AD_DOMAIN
