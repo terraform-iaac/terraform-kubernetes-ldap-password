@@ -81,23 +81,18 @@ variable "volume_mount" {
 #VARIABLES FOR SETTINGS.INI
 variable "page_title" {
   description = "(REQUIRED)Message which will be displayed on page header"
-  default = ""
 }
 variable "ldap_host" {
   description = "(REQUIRED)IP adress or DNS name which will be connected to"
-  default = ""
 }
 variable "ldap_port" {
   description = "(REQUIRED) Port on ldap server, if USE_SSL=true need to use port 636"
-  default = ""
 }
 variable "use_ssl" {
   description = "(REQUIRED) True or False if is used False then connection is going to be insecure"
-  default = ""
 }
 variable "ldap_base" {
   description = "(REQUIRED) LDAP base example: dc=example,dc=com"
-  default = ""
 }
 # For AD / Samba 4
 variable "dc_type" {
@@ -106,7 +101,6 @@ variable "dc_type" {
 }
 variable "ad_domain" {
   description = "(REQUIRED) If need to use AD or Samba 4 - Directory domain e.g. example.com"
-  default = ""
 }
 variable "ad_search_filter" {
   description = "(OPTIONAL) If need to use AD or Samba 4 - Ldap filrter that is used to find user"
