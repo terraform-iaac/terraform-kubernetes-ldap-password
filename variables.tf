@@ -1,11 +1,14 @@
 variable "domain" {
+  type = string
   description = "(Required) Domain for the url. Generating url: ldap-passwd.[domain]"
 }
 variable "app_name" {
+  type = string
   description = "(Optional) Application name"
   default = "ldap-passwd"
 }
 variable "app_namespace" {
+  type = string
   description = "(Optional) Namespace name"
   default = "ldap-passwd"
 }
@@ -14,6 +17,7 @@ variable "namespace_labels" {
   default = null
 }
 variable "create_namespace" {
+  type = bool
   description = "(Optional) Default 'false' value will create namespace in cluster. If you want use exist namespace set 'false' "
   default = true
 }
@@ -37,6 +41,7 @@ variable "web_internal_port" {
   ]
 }
 variable "tls" {
+  type = list(string)
   description = "(Optional) Define TLS , for use only HTTPS"
   default = []
 }
@@ -47,6 +52,7 @@ variable "ingress_annotations" {
   }
 }
 variable "image_tag" {
+  type = string
   description = "(Optional) Docker image tag for ldap-passwd-webui"
   default = "latest"
 }
@@ -79,43 +85,54 @@ variable "volume_mount" {
 }
 #VARIABLES FOR SETTINGS.INI
 variable "page_title" {
-  description = "(REQUIRED)Message which will be displayed on page header"
+  type = string
+  description = "(Required) Message which will be displayed on page header"
 }
 variable "ldap_host" {
-  description = "(REQUIRED)IP adress or DNS name which will be connected to"
+  type = string
+  description = "(Required) IP adress or DNS name which will be connected to"
 }
 variable "ldap_port" {
-  description = "(REQUIRED) Port on ldap server, if USE_SSL=true need to use port 636"
+  type = string
+  description = "(Required) Port on ldap server, if USE_SSL=true need to use port 636"
 }
 variable "use_ssl" {
-  description = "(REQUIRED) True or False if is used False then connection is going to be insecure"
+  type = bool
+  description = "(Required) True or False if is used False then connection is going to be insecure"
 }
 variable "ldap_base" {
-  description = "(REQUIRED) LDAP base example: dc=example,dc=com"
+  type = string
+  description = "(Required) LDAP base example: dc=example,dc=com"
 }
 # For AD / Samba 4
 variable "dc_type" {
+  type = string
   description = "(OPTIONAL) If need to use AD or Samba 4 - Domain controller type"
   default = "ad"
 }
 variable "ad_domain" {
-  description = "(REQUIRED) If need to use AD or Samba 4 - Directory domain e.g. example.com"
+  type = string
+  description = "(Required)  If need to use AD or Samba 4 - Directory domain e.g. example.com"
 }
 variable "ad_search_filter" {
-  description = "(OPTIONAL) If need to use AD or Samba 4 - Ldap filrter that is used to find user"
+  type = string
+  description = "(Optional) If need to use AD or Samba 4 - Ldap filrter that is used to find user"
   default = "sAMAccountName={uid}"
 }
 # ldappasswd server
 variable "server" {
-  description = "(OPTIONAL) - ldap-passwd application mode"
+  type = string
+  description = "(Optional) - ldap-passwd application mode"
   default = "auto"
 }
 variable "server_host" {
-  description = "(OPTIONAL) - ldap-passwd server host"
+  type = string
+  description = "(Optional) - ldap-passwd server host"
   default = "0.0.0.0"
 }
 variable "server_port" {
-  description = "(OPTIONAL) - ldap-passwd server port"
+  type = string
+  description = "(Optional) - ldap-passwd server port"
   default = "8080"
 }
 #END OF VARIABLES FOR SETTINGS.INI
