@@ -13,7 +13,7 @@ resource "kubernetes_namespace" "namespace" {
 resource "kubernetes_config_map" "settings" {
   metadata {
     name      = "settings.ini"
-    namespace = var.app_namespace
+    namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
   }
 
   data = {
