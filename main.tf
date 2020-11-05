@@ -22,7 +22,7 @@ resource "kubernetes_config_map" "settings" {
 }
 
 module "deploy" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git?ref=v1.0.3"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git?ref=v1.0.8"
 
   name              = var.app_name
   namespace         = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
@@ -45,7 +45,7 @@ module "service" {
 }
 
 module "ingress" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git?ref=v1.0.0"
+  source = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git?ref=v1.0.2"
 
   app_name          = var.app_name
   app_namespace     = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
