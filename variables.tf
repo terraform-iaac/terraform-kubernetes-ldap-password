@@ -46,7 +46,6 @@ variable "tls" {
   default     = []
 }
 variable "tls_hosts" {
-  type        = list(string)
   description = "(Optional) Define TLS per host, for use only HTTPS"
   default     = []
 }
