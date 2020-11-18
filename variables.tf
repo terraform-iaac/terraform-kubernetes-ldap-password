@@ -45,6 +45,11 @@ variable "tls" {
   description = "(Optional) Define TLS , for use only HTTPS"
   default     = []
 }
+variable "tls_hosts" {
+  type        = list(string)
+  description = "(Optional) Define TLS per host, for use only HTTPS"
+  default     = []
+}
 variable "ingress_annotations" {
   description = "(Optional) Set addional annontations for ingress"
   default     = {

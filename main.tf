@@ -52,5 +52,6 @@ module "ingress" {
   domain_name       = var.domain
   web_internal_port = var.web_internal_port
   tls               = var.tls
+  tls_hosts         = var.tls_hosts
   annotations       = var.ingress_annotations
 }
