@@ -31,12 +31,12 @@ variable "ports" {
     }
   ]
 }
-variable "web_internal_port" {
+variable "rule" {
   description = "(Optional) Connect URL to Container internal port. !Note! If this value changed, need specify new ports in var.ports"
   default     = [
     {
       sub_domain    = "ldap-passwd."
-      internal_port = "8080"
+      external_port = "8080"
     }
   ]
 }

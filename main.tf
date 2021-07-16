@@ -1,12 +1,12 @@
 resource "kubernetes_namespace" "namespace" {
- count = var.create_namespace == true ? 1 : 0
+  count = var.create_namespace == true ? 1 : 0
 
   metadata {
     annotations = {
-      name      = var.app_namespace
+      name = var.app_namespace
     }
-    labels      = var.namespace_labels
-    name        = var.app_namespace
+    labels = var.namespace_labels
+    name   = var.app_namespace
   }
 }
 
@@ -22,7 +22,8 @@ resource "kubernetes_config_map" "settings" {
 }
 
 module "deploy" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_deploy.git?ref=v1.0.8"
+  source  = "terraform-iaac/deployment/kubernetes"
+  version = "1.1.3"
 
   name              = var.app_name
   namespace         = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
@@ -37,7 +38,8 @@ module "deploy" {
 }
 
 module "service" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_service.git?ref=v1.0.0"
+  source  = "terraform-iaac/service/kubernetes"
+  version = "1.0.3"
 
   app_name      = var.app_name
   app_namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
@@ -45,12 +47,13 @@ module "service" {
 }
 
 module "ingress" {
-  source = "git::https://github.com/greg-solutions/terraform_k8s_ingress.git?ref=v1.0.2"
+  source  = "terraform-iaac/ingress/kubernetes"
+  version = "1.1.1"
 
-  app_name          = var.app_name
-  app_namespace     = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
+  service_name      = var.app_name
+  service_namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
   domain_name       = var.domain
-  web_internal_port = var.web_internal_port
+  rule              = var.rule
   tls               = var.tls
   tls_hosts         = var.tls_hosts
   annotations       = var.ingress_annotations
