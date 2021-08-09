@@ -1,5 +1,5 @@
 module "ldap_passwd" {
-  source = "../"
+  source = "git::https://github.com/terraform-iaac/terraform-kubernetes-ldap-password.git"
   domain = "example.com"
   app_name = "ldap-passwd" #OPTIONAL
   app_namespace = "ldap-passwd" #OPTIONAL
@@ -18,3 +18,4 @@ module "ldap_passwd" {
   server_host = "0.0.0.0" #OPTIONAL
   server_port = "8080" #OPTIONAL
   #END OF VARIABLES FOR SETTINGS.INI
+}

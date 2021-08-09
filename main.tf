@@ -23,7 +23,7 @@ resource "kubernetes_config_map" "settings" {
 
 module "deploy" {
   source  = "terraform-iaac/deployment/kubernetes"
-  version = "1.1.3"
+  version = "1.1.4"
 
   name              = var.app_name
   namespace         = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace

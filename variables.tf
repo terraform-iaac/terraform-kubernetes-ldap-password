@@ -23,7 +23,7 @@ variable "create_namespace" {
 }
 variable "ports" {
   description = "(Optional) Port mapping"
-  default     = [
+  default = [
     {
       name          = "web-access"
       internal_port = "8080"
@@ -33,7 +33,7 @@ variable "ports" {
 }
 variable "rule" {
   description = "(Optional) Connect URL to Container internal port. !Note! If this value changed, need specify new ports in var.ports"
-  default     = [
+  default = [
     {
       sub_domain    = "ldap-passwd."
       external_port = "8080"
@@ -46,12 +46,13 @@ variable "tls" {
   default     = []
 }
 variable "tls_hosts" {
+  type        = list(string)
   description = "(Optional) Define TLS per host, for use only HTTPS"
   default     = []
 }
 variable "ingress_annotations" {
   description = "(Optional) Set addional annontations for ingress"
-  default     = {
+  default = {
     "kubernetes.io/ingress.class" = "nginx"
   }
 }
@@ -70,7 +71,7 @@ variable "volume_nfs" {
 }
 variable "volume_config_map" {
   description = "(Optional) Create ConfigMap volume"
-  default     = [
+  default = [
     {
       mode        = "0400"
       name        = "settings.ini"
@@ -79,7 +80,7 @@ variable "volume_config_map" {
   ]
 }
 variable "volume_mount" {
-  default     = [
+  default = [
     {
       mount_path  = "/opt/settings.ini"
       sub_path    = "settings.ini"
@@ -141,10 +142,10 @@ variable "server_port" {
 }
 #END OF VARIABLES FOR SETTINGS.INI
 variable "env" {
-  default     = [
+  default = [
     {
-      name    = "CONF_FILE"
-      value   = "/opt/settings.ini"
+      name  = "CONF_FILE"
+      value = "/opt/settings.ini"
     }
   ]
 }
