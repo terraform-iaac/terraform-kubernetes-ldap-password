@@ -58,7 +58,7 @@ create_namespace | Default 'false' value will create namespace in cluster. If yo
 ports | Port mapping | <pre>list(object({<br>    name = string<br>    internal_port = string<br>    external_port = string<br>  }))</pre> | <pre>[<br>  {<br>    name  = "web-access"<br>    internal_port = "8080"<br>   external_port = "80"<br>  }<br>]</pre> | n/a | no
 rule | Connect URL to Container internal port. !Note! If this value changed, need specify new ports in var.ports | <pre>list(object({<br>    sub_domain = string<br>   external_port = string<br>  }))</pre> | <pre>[<br>  {<br>    sub_domain = "ldap-passwd."<br>   external_port = "8080"<br>  }<br>]</pre> | n/a | no
 tls | (Optional) Define TLS , for use only HTTPS | `list(string)` | `[]` | n/a | no
-tls_hosts | Define TLS per host, for use only HTTPS | `list(string)` | `[]` | n/a | no
+tls_hosts | Define TLS per host, for use only HTTPS | <pre>list(object({<br>    secret_name = string<br>    hosts = list(string)<br>  }))| `[]` | n/a | no
 ingress_annotations | (Optional) Set addional annontations for ingress |  <pre>object({<br>   name = value<br>})</pre> | <pre>{<br>   "kubernetes.io/ingress.class" = "nginx"<br>}</pre> | n/a | no
 image_tag | Docker image tag for ldap-passwd-webui | `string` | `latest` | `v1.0abc` | no
 volume_host_path | Create HostPath volume | `list(string)` | `[]` | n/a | no

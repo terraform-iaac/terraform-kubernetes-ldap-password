@@ -46,7 +46,7 @@ variable "tls" {
   default     = []
 }
 variable "tls_hosts" {
-  type        = list(string)
+  type        = list(object({ secret_name = string, hosts = list(string) }))
   description = "(Optional) Define TLS per host, for use only HTTPS"
   default     = []
 }
