@@ -18,7 +18,7 @@ Kubernetes provider | >= 2.17.0
 
 ```shell script
 module "ldap_passwd" {
-  source = "git::https://github.com/terraform-iaac/terraform-kubernetes-ldap-password.git"
+  source  = "terraform-iaac/ldap-password/kubernetes"
   
   domain = "example.com"
   app_name = "ldap-passwd"
