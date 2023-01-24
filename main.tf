@@ -17,13 +17,13 @@ resource "kubernetes_config_map" "settings" {
   }
 
   data = {
-    "settings.ini" = data.template_file.settings.rendered
+    "settings.ini" = local.settings
   }
 }
 
 module "deploy" {
   source  = "terraform-iaac/deployment/kubernetes"
-  version = "1.1.4"
+  version = "1.4.2"
 
   name              = var.app_name
   namespace         = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
@@ -39,7 +39,7 @@ module "deploy" {
 
 module "service" {
   source  = "terraform-iaac/service/kubernetes"
-  version = "1.0.3"
+  version = "1.0.4"
 
   app_name      = var.app_name
   app_namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
@@ -48,13 +48,20 @@ module "service" {
 
 module "ingress" {
   source  = "terraform-iaac/ingress/kubernetes"
-  version = "1.1.1"
+  version = "2.0.1"
 
   service_name      = var.app_name
   service_namespace = var.create_namespace == true ? kubernetes_namespace.namespace[0].id : var.app_namespace
-  domain_name       = var.domain
-  rule              = var.rule
-  tls               = var.tls
-  tls_hosts         = var.tls_hosts
+  domain_name       = "${var.subdomain}${var.domain}"
+  rule              = var.ports
+
+  tls               = var.tls_secrets_name
+  tls_hosts         = var.tls_secret_name == null ? null : [
+    {
+      secret_name = var.tls_secret_name
+      hosts       = ["${var.subdomain}${var.domain}"]
+    }
+  ]
+  ingress_class_name = var.ingress_class_name
   annotations       = var.ingress_annotations
 }

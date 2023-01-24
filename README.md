@@ -10,9 +10,9 @@ Module deploy WebUI for manage LDAP password. Its comfortable resource for fast 
 
 Name | Description
 --- | --- |
-Terraform | >= v0.14.9
-Helm provider | >= 1.2.1
-Kubernetes provider | >= 1.11.1
+Terraform | >= v1.0.0
+Helm provider | >= 2.8.0
+Kubernetes provider | >= 2.17.0
 
 ## Usage
 
@@ -46,25 +46,26 @@ module "ldap_passwd" {
 
 ## Inputs
 
-Name | Description | Type | Default | Example | Required
---- | --- | --- | --- |--- |--- 
-env | Environment variables | <pre>list(object({<br>    name = string<br>    value = string<br>  }))</pre> | <pre>[<br>  {<br>    name  = "CONF_FILE"<br>    value = "/opt/settings.ini"<br>  }<br>]</pre> | n/a | no
-node_selector | Specify node selector for pod | `map(string)` | `null` | n/a | no
-domain | Domain for the url. Generating url: ldap-passwd.[domain] | `string` | n/a | `example.com` | yes
-app_name | Application name | `string` | `ldap-passwd` | n/a | no |
-app_namespace | (Optional) Namespace name | `string` | `ldap-passwd` | n/a | no |
-namespace_labels | Add labels for namespace | `string` | `null` | n/a | no
-create_namespace | Default 'false' value will create namespace in cluster. If you want use exist namespace set 'false' | `bool` | true | n/a | no
-ports | Port mapping | <pre>list(object({<br>    name = string<br>    internal_port = string<br>    external_port = string<br>  }))</pre> | <pre>[<br>  {<br>    name  = "web-access"<br>    internal_port = "8080"<br>   external_port = "80"<br>  }<br>]</pre> | n/a | no
-rule | Connect URL to Container internal port. !Note! If this value changed, need specify new ports in var.ports | <pre>list(object({<br>    sub_domain = string<br>   external_port = string<br>  }))</pre> | <pre>[<br>  {<br>    sub_domain = "ldap-passwd."<br>   external_port = "8080"<br>  }<br>]</pre> | n/a | no
-tls | (Optional) Define TLS , for use only HTTPS | `list(string)` | `[]` | n/a | no
-tls_hosts | Define TLS per host, for use only HTTPS | <pre>list(object({<br>    secret_name = string<br>    hosts = list(string)<br>  }))| `[]` | n/a | no
-ingress_annotations | (Optional) Set addional annontations for ingress |  <pre>object({<br>   name = value<br>})</pre> | <pre>{<br>   "kubernetes.io/ingress.class" = "nginx"<br>}</pre> | n/a | no
-image_tag | Docker image tag for ldap-passwd-webui | `string` | `latest` | `v1.0abc` | no
-volume_host_path | Create HostPath volume | `list(string)` | `[]` | n/a | no
-volume_nfs | Create NFS volume | `list(string)` | `[]` | n/a | no
-volume_config_map | Create ConfigMap volume | <pre>list(object({<br>    mode = string<br>    name = string<br>    volume_name = string<br>  }))</pre> | <pre>[<br>  {<br>    mode = "0400"<br>    name = "settings.ini"<br>    volume_name = "settings-ini"<br>  }<br>]</pre> | n/a | no
-volume_mount | Volume mount to deployment | <pre>list(object({<br>    mount_path = string<br>    sub_path = string<br>    volume_name = string<br>  }))</pre> | <pre>[<br>  {<br>    mount_path = "/opt/settings.ini"<br>    sub_path = "settings.ini"<br>    volume_name = "settings-ini"<br>  }<br>]</pre> | n/a | no
+Name | Description                                                                                        | Type                                                                                                               | Default                                                                                                                                      | Example              | Required
+--- |----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|----------------------|--- 
+env | Environment variables                                                                              | <pre>list(object({<br>    name = string<br>    value = string<br>  }))</pre>                                       | <pre>[<br>  {<br>    name  = "CONF_FILE"<br>    value = "/opt/settings.ini"<br>  }<br>]</pre>                                                | n/a                  | no
+node_selector | Specify node selector for pod                                                                      | `map(string)`                                                                                                      | `null`                                                                                                                                       | n/a                  | no
+domain | Domain for the url.                                            | `string`                                                                                                           | n/a                                                                                                                                          | `example.com`        | yes
+subdomain | Subdomain for the domain. Generating url: ldap-passwd.[domain]                                     | `string`                                                                                                           | ldap-passwd.                                                                                                                                 | `cusomsub.`          | no
+app_name | Application name                                                                                   | `string`                                                                                                           | `ldap-passwd`                                                                                                                                | n/a                  | no |
+app_namespace | (Optional) Namespace name                                                                          | `string`                                                                                                           | `ldap-passwd`                                                                                                                                | n/a                  | no |
+namespace_labels | Add labels for namespace                                                                           | `string`                                                                                                           | `null`                                                                                                                                       | n/a                  | no
+create_namespace | Default 'false' value will create namespace in cluster. If you want use exist namespace set 'false' | `bool`                                                                                                             | true                                                                                                                                         | n/a                  | no
+ports | Port mapping                                                                                       | <pre>list(object({<br>    name = string<br>    internal_port = string<br>    external_port = string<br>  }))</pre> | <pre>[<br>  {<br>    name  = "web-access"<br>    internal_port = "8080"<br>   external_port = "80"<br>  }<br>]</pre>                         | n/a                  | no
+tls_secrets_name | (Optional) Secrets name with SSL certificate for domains in ingress                                | `list(string)`                                                                                                     | `[]`                                                                                                                                         | `[secret1, secret2]` | no
+tls_secret_name | (Optional) Secret name with SSL certificate for main domain only in ingress                        | `string`                                                                                                           | `null`                                                                                                                                       | mysecret             | no
+ingress_annotations | (Optional) Set additional annontations for ingress                                                   | <pre>object({<br>   name = value<br>})</pre>                                                                       | <pre>{<br>   "kubernetes.io/ingress.class" = "nginx"<br>}</pre>                                                                              | n/a                  | no
+ingress_class_name | (Optional) Ingress Class name in ingress                                                   | `string`                                                                                                           | `nginx`                                                                                                                                      | `nginx-controller` | no
+image_tag | Docker image tag for ldap-passwd-webui                                                             | `string`                                                                                                           | `latest`                                                                                                                                     | `v1.0abc`            | no
+volume_host_path | Create HostPath volume                                                                             | `list(string)`                                                                                                     | `[]`                                                                                                                                         | n/a                  | no
+volume_nfs | Create NFS volume                                                                                  | `list(string)`                                                                                                     | `[]`                                                                                                                                         | n/a                  | no
+volume_config_map | Create ConfigMap volume                                                                            | <pre>list(object({<br>    mode = string<br>    name = string<br>    volume_name = string<br>  }))</pre>            | <pre>[<br>  {<br>    mode = "0400"<br>    name = "settings.ini"<br>    volume_name = "settings-ini"<br>  }<br>]</pre>                        | n/a                  | no
+volume_mount | Volume mount to deployment                                                                         | <pre>list(object({<br>    mount_path = string<br>    sub_path = string<br>    volume_name = string<br>  }))</pre>  | <pre>[<br>  {<br>    mount_path = "/opt/settings.ini"<br>    sub_path = "settings.ini"<br>    volume_name = "settings-ini"<br>  }<br>]</pre> | n/a                  | no
 
 ### VARIABLES FOR SETTINGS.INI
 Name | Description | Type | Default | Example | Required

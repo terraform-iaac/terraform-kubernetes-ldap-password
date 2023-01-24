@@ -31,27 +31,26 @@ variable "ports" {
     }
   ]
 }
-variable "rule" {
-  description = "(Optional) Connect URL to Container internal port. !Note! If this value changed, need specify new ports in var.ports"
-  default = [
-    {
-      sub_domain    = "ldap-passwd."
-      external_port = "8080"
-    }
-  ]
+variable "subdomain" {
+  default = "ldap-passwd."
 }
-variable "tls" {
+variable "tls_secrets_name" {
   type        = list(string)
-  description = "(Optional) Define TLS , for use only HTTPS"
+  description = "(Optional) Secrets name with SSL certificate for all domains in ingress"
   default     = []
 }
-variable "tls_hosts" {
-  type        = list(object({ secret_name = string, hosts = list(string) }))
-  description = "(Optional) Define TLS per host, for use only HTTPS"
-  default     = []
+variable "tls_secret_name" {
+  description = "(Optional) Secret name with SSL certificate for main domain only in ingress"
+  type        = string
+  default     = null
+}
+variable "ingress_class_name" {
+  description = "(Optional) Ingress Class name in ingress"
+  default     = "nginx"
+  type        = string
 }
 variable "ingress_annotations" {
-  description = "(Optional) Set addional annontations for ingress"
+  description = "(Optional) Set additional annontations for ingress"
   default = {
     "kubernetes.io/ingress.class" = "nginx"
   }
@@ -142,12 +141,9 @@ variable "server_port" {
 }
 #END OF VARIABLES FOR SETTINGS.INI
 variable "env" {
-  default = [
-    {
-      name  = "CONF_FILE"
-      value = "/opt/settings.ini"
-    }
-  ]
+  default = {
+    "CONF_FILE" = "/opt/settings.ini"
+  }
 }
 variable "node_selector" {
   description = "(Optional) Specify node selector for pod"
